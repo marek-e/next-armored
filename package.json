@@ -1,0 +1,61 @@
+{
+  "name": "next-armored",
+  "version": "0.1.0",
+  "description": "Security middlewares for Next.js",
+  "homepage": "https://github.com/mareke/next-armored#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mareke/next-armored.git"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "lint": "tsc",
+    "eslint": "eslint .",
+    "format": "prettier --write .",
+    "check-format": "prettier --check .",
+    "ci": "pnpm run build && pnpm run check-format && pnpm run lint"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "Marek Elmayan <marek.elmayan@theodo.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "@types/node": "^22.5.4",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.9.0",
+    "next": "^14.2.8",
+    "prettier": "^3.3.3",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.4.0"
+  },
+  "peerDependencies": {
+    "next": "^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0"
+  },
+  "packageManager": "pnpm@9.9.0",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.cjs"
+    },
+    "./cors": {
+      "types": "./dist/middlewares/cross-origin-resource-sharing/index.d.ts",
+      "import": "./dist/middlewares/cross-origin-resource-sharing/index.js",
+      "require": "./dist/middlewares/cross-origin-resource-sharing/index.js"
+    },
+    "./csp": {
+      "types": "./dist/middlewares/content-security-policy/index.d.ts",
+      "import": "./dist/middlewares/content-security-policy/index.js",
+      "require": "./dist/middlewares/content-security-policy/index.js"
+    }
+  },
+  "files": ["dist/**/*"],
+  "keywords": ["next", "next.js", "cors", "middleware", "security", "csp", "content-security-policy", "cross-origin-resource-sharing"]
+}
