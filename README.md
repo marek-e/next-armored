@@ -1,6 +1,7 @@
 <p align="center">
-  <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="./assets/N-armor.jpg" alt="next-armored logo">
+  <a 
+  href="https://raw.githubusercontent.com/marek-e/next-armored/master/assets/N-armor.jpg" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="https://raw.githubusercontent.com/marek-e/next-armored/master/assets/N-armor.jpg" alt="next-armored logo">
   </a>
 </p>
 <br/>
