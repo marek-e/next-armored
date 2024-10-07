@@ -15,6 +15,9 @@
     "eslint": "eslint .",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
+    "prepublishOnly": "pnpm run ci",
+    "new-version": "changeset",
+    "local-release": "changeset version && changeset publish",
     "ci": "pnpm run build && pnpm run check-format && pnpm run lint"
   },
   "main": "dist/index.cjs",
@@ -23,6 +26,7 @@
   "author": "Marek Elmayan <marek.elmayan@theodo.com>",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^2.27.9",
     "@eslint/js": "^9.10.0",
     "@types/node": "^22.5.4",
     "eslint": "^9.10.0",
@@ -56,6 +60,17 @@
       "require": "./dist/middlewares/content-security-policy/index.js"
     }
   },
-  "files": ["dist/**/*"],
-  "keywords": ["next", "next.js", "cors", "middleware", "security", "csp", "content-security-policy", "cross-origin-resource-sharing"]
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "next",
+    "next.js",
+    "cors",
+    "middleware",
+    "security",
+    "csp",
+    "content-security-policy",
+    "cross-origin-resource-sharing"
+  ]
 }
