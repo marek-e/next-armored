@@ -1,5 +1,5 @@
 {
-  "name": "next-armored",
+  "name": "@next-armored/core",
   "version": "0.2.1",
   "description": "Security middlewares for Next.js",
   "homepage": "https://github.com/mareke/next-armored#readme",
@@ -58,6 +58,9 @@
       "import": "./dist/middlewares/content-security-policy/index.js",
       "default": "./dist/middlewares/content-security-policy/index.js"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "dist/**/*"

@@ -1,7 +1,7 @@
 <p align="center">
   <a 
-  href="https://raw.githubusercontent.com/marek-e/next-armored/master/assets/N-armor.jpg" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="https://raw.githubusercontent.com/marek-e/next-armored/master/assets/N-armor.jpg" alt="next-armored logo">
+  href="https://raw.githubusercontent.com/marek-e/next-armored/master/assets/n-armor.svg" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="https://raw.githubusercontent.com/marek-e/next-armored/master/assets/n-armor.svg" alt="next-armored logo">
   </a>
 </p>
 <br/>
