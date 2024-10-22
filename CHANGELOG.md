@@ -1,5 +1,11 @@
 # next-armored
 
+## 0.2.2
+
+### Patch Changes
+
+- Scoped packages
+
 ## 0.2.1
 
 ### Patch Changes
