@@ -1,0 +1,50 @@
+{
+  "name": "@next-armored/cors",
+  "version": "0.2.1",
+  "description": "CORS middleware for Next.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "check-format": "prettier --ignore-path ../../.prettierignore --check .",
+    "lint": "tsc",
+    "check-exports": "attw --config-path ../../.attw.json --pack .",
+    "ci": "pnpm run build && pnpm run check-format && pnpm run lint && pnpm run check-exports"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.16.4",
+    "@changesets/cli": "^2.27.9",
+    "@eslint/js": "^9.10.0",
+    "@types/node": "^22.5.4",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.9.0",
+    "next": "^14.2.14",
+    "prettier": "^3.3.3",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.4.0"
+  },
+  "peerDependencies": {
+    "next": "^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0"
+  },
+  "packageManager": "pnpm@9.9.0",
+  "author": "Marek Elmayan <marek.elmayan@theodo.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "next",
+    "next.js",
+    "cors",
+    "middleware",
+    "security",
+    "cross-origin-resource-sharing"
+  ]
+}
