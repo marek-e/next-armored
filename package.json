@@ -15,10 +15,11 @@
     "eslint": "eslint .",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
+    "check-exports": "attw --config-path .attw.json --pack .",
     "prepublishOnly": "pnpm run ci",
     "new-version": "changeset",
     "local-release": "changeset version && changeset publish",
-    "ci": "pnpm run build && pnpm run check-format && pnpm run lint"
+    "ci": "pnpm run build && pnpm run check-format && pnpm run lint && pnpm run check-exports"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -26,6 +27,7 @@
   "author": "Marek Elmayan <marek.elmayan@theodo.com>",
   "license": "MIT",
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.16.4",
     "@changesets/cli": "^2.27.9",
     "@eslint/js": "^9.10.0",
     "@types/node": "^22.5.4",
@@ -45,19 +47,16 @@
   "packageManager": "pnpm@9.9.0",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.cjs"
     },
     "./cors": {
-      "types": "./dist/middlewares/cross-origin-resource-sharing/index.d.ts",
       "import": "./dist/middlewares/cross-origin-resource-sharing/index.js",
-      "require": "./dist/middlewares/cross-origin-resource-sharing/index.js"
+      "default": "./dist/middlewares/cross-origin-resource-sharing/index.js"
     },
     "./csp": {
-      "types": "./dist/middlewares/content-security-policy/index.d.ts",
       "import": "./dist/middlewares/content-security-policy/index.js",
-      "require": "./dist/middlewares/content-security-policy/index.js"
+      "default": "./dist/middlewares/content-security-policy/index.js"
     }
   },
   "files": [
