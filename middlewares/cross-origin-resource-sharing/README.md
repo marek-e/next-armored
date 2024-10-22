@@ -7,8 +7,8 @@
 <br/>
 <p align="center">
   <a href="https://npmjs.com/package/@next-armored/cors"><img src="https://img.shields.io/npm/v/@next-armored/cors.svg" alt="npm package"></a>
-  <a href="https://github.com/mareke/next-armored/actions/workflows/ci.yml"><img src="https://github.com/mareke/next-armored/actions/workflows/ci.yml/badge.svg?branch=master" alt="build status"></a>
-  <a href="https://pr.new/mareke/next-armored"><img src="https://developer.stackblitz.com/img/start_pr_dark_small.svg" alt="Start new PR in StackBlitz Codeflow"></a>
+  <a href="https://github.com/marek-e/next-armored/actions/workflows/ci.yml"><img src="https://github.com/marek-e/next-armored/actions/workflows/ci.yml/badge.svg?branch=master" alt="build status"></a>
+  <a href="https://pr.new/marek-e/next-armored"><img src="https://developer.stackblitz.com/img/start_pr_dark_small.svg" alt="Start new PR in StackBlitz Codeflow"></a>
 </p>
 <br/>
 
