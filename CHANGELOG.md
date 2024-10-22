@@ -1,5 +1,11 @@
 # next-armored
 
+## 0.2.1
+
+### Patch Changes
+
+- a4da5ef: Minor fixes on next version and readme
+
 ## 0.2.0
 
 ### Minor Changes
