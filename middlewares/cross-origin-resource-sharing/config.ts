@@ -31,7 +31,7 @@ type CorsConfigDefaults = {
  * @default preflightContinue is false
  * @default optionsSuccessStatus is 204
  * @default exposedHeaders is []
- * @default maxAge is 5 seconds
+ * @default maxAge is 1 day
  */
 export const DEFAULT_CORS_CONFIG: CorsConfigDefaults = {
   origins: undefined, // Required -> DO NOT USE * by default
@@ -41,5 +41,5 @@ export const DEFAULT_CORS_CONFIG: CorsConfigDefaults = {
   preflightContinue: false,
   optionsSuccessStatus: 204,
   exposedHeaders: [],
-  maxAge: 5, // 5 seconds is the default value, 86400 seconds is often used
+  maxAge: 60 * 60 * 24, // 1 day
 };
