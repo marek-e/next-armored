@@ -1,0 +1,37 @@
+{
+  "folders": [
+    {
+      "path": "middlewares/cross-origin-resource-sharing",
+      "name": "🔴 CORS",
+    },
+    {
+      "path": "middlewares/content-security-policy",
+      "name": "🔵 CSP",
+    },
+    {
+      "path": ".github/workflows",
+      "name": "🔧 CI/CD",
+    },
+    {
+      "path": ".",
+      "name": "✨ root",
+    },
+  ],
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+    },
+    "search.exclude": {
+      "**/dist": true,
+      "**/node_modules": true,
+      "**/pnpm-lock.yaml": true,
+    },
+    "[html][javascript][json][typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+    },
+    "typescript.tsdk": "✨ safetracker root/node_modules/typescript/lib",
+    "debug.internalConsoleOptions": "neverOpen",
+  },
+}
