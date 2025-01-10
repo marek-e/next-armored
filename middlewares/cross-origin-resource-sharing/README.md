@@ -96,9 +96,83 @@ You can define other options as well.
 - `exposedHeaders` - array of headers that are exposed to the client. Defaults to `[]`.
 - `preflightContinue` - boolean value to indicate if the next middleware should be executed for preflight requests. Defaults to `false`.
 
+If you are building a public api, you can allow all origins by passing `origins: ['*']` to the `createCorsMiddleware` function.
+⚠️ But be aware that this can be a security risk.
+
 ### How to combine with other middlewares
 
-TODO
+```typescript middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { createCorsMiddleware } from 'next-armored/cors';
+
+const corsMiddleware = createCorsMiddleware({
+  origins: ['https://example.com', 'http://localhost:5173'],
+});
+
+const middleware1 = (request: NextRequest) => {
+  console.log('middleware1');
+  return NextResponse.next();
+};
+
+export function middleware(request: NextRequest) {
+  const response = middleware1(request);
+  const isApi = request.nextUrl.pathname.startsWith('/api');
+  if (isApi) {
+    return corsMiddleware(request, response);
+  }
+  return response;
+}
+
+export const config = {
+  matcher: ['/api/:path*', '/home/:path*'],
+};
+```
+
+The first option is to call the first middleware and get the response.
+Then you can give the response to the cors middleware as an argument.
+In this case, the cors middleware will attach the headers to the response instead of returning a new response.
+If all of your middlewares doesn't apply to the same matching path, you have to check if the request is an api request and then apply the cors middleware only in that case.
+
+The second option is to write an utils to chain the middlewares. Here is a snippet of how you can do it but it can be adapted to your needs.
+
+```typescript chainMiddlewares.ts
+export type CustomMiddleware = (
+  request: NextRequest,
+  event: NextFetchEvent,
+  response: NextResponse,
+) => NextMiddlewareResult;
+
+type MiddlewareFactory = (next: CustomMiddleware) => CustomMiddleware;
+
+export const chainMiddlewares = (
+  functions: MiddlewareFactory[],
+  index = 0,
+): CustomMiddleware => {
+  const current = functions[index];
+
+  if (current) {
+    const next = chainMiddlewares(functions, index + 1);
+
+    return current(next);
+  }
+
+  return (
+    _request: NextRequest,
+    _event: NextFetchEvent,
+    response: NextResponse,
+  ) => response;
+};
+```
+
+```typescript middlewares.ts
+export const middleware = chainMiddleware([
+  middleware1,
+  middleware2,
+  corsMiddleware,
+]);
+```
+
+Otherwise, you can use other open source libraries like [next-middleware-chain](https://github.com/HamedBahram/next-middleware-chain) or [next-compose-middleware](https://github.com/kj455/next-compose-middleware) to chain the middlewares.
 
 ## License
 
