@@ -1,16 +1,4 @@
-export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS';
-export type Origin = string | RegExp;
-
-export type CorsConfig = {
-  origins: Origin[];
-  methods?: Method[];
-  headers?: string[];
-  allowCredentials?: boolean;
-  exposedHeaders?: string[];
-  maxAge?: number;
-  preflightContinue?: boolean;
-  optionsSuccessStatus?: number;
-};
+import type { Method } from './types';
 
 type CorsConfigDefaults = {
   origins: undefined;

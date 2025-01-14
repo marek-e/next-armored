@@ -1,25 +1,20 @@
-import { NextResponse, NextFetchEvent, NextRequest } from 'next/server';
-import type { CorsConfig, Method, Origin } from './config';
+import { NextResponse, NextRequest } from 'next/server';
+import type {
+  CorsConfig,
+  IsOriginAllowedResult,
+  Method,
+  Origin,
+} from './types';
 import { DEFAULT_CORS_CONFIG } from './config';
-import type { NextMiddlewareResult } from 'next/dist/server/web/types';
-
-// CORS headers
-const ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin';
-const ACCESS_CONTROL_ALLOW_CREDENTIALS = 'Access-Control-Allow-Credentials';
-const ACCESS_CONTROL_ALLOW_METHODS = 'Access-Control-Allow-Methods';
-const ACCESS_CONTROL_ALLOW_HEADERS = 'Access-Control-Allow-Headers';
-const ACCESS_CONTROL_EXPOSE_HEADERS = 'Access-Control-Expose-Headers';
-const ACCESS_CONTROL_MAX_AGE = 'Access-Control-Max-Age';
-
-type NextCorsMiddleware = (
-  request: NextRequest,
-  response?: NextResponse,
-) => NextMiddlewareResult;
-
-interface Header {
-  key: string;
-  value: string;
-}
+import {
+  ACCESS_CONTROL_MAX_AGE,
+  ACCESS_CONTROL_EXPOSE_HEADERS,
+  ACCESS_CONTROL_ALLOW_CREDENTIALS,
+  ACCESS_CONTROL_ALLOW_METHODS,
+  ACCESS_CONTROL_ALLOW_HEADERS,
+  ACCESS_CONTROL_ALLOW_ORIGIN,
+} from './constants';
+import type { Header, NextCorsMiddleware } from './types';
 
 const createCorsMiddleware = (config: CorsConfig): NextCorsMiddleware => {
   const configWithDefaults = { ...DEFAULT_CORS_CONFIG, ...config };
@@ -76,15 +71,6 @@ const createCorsMiddleware = (config: CorsConfig): NextCorsMiddleware => {
     };
   }
 
-  type IsOriginAllowedResult =
-    | {
-        result: false;
-      }
-    | {
-        result: true;
-        origin: string;
-      };
-
   function getIsOriginAllowed(
     origin: string,
     allowedOrigins: Origin[],
@@ -113,8 +99,12 @@ const createCorsMiddleware = (config: CorsConfig): NextCorsMiddleware => {
    * @param request - The request object with information about the origin and the method
    * @param response (optional) - If provided, the headers will be attached to the response. Unless in case of preflight request without preflightContinue set to true.
    * @returns A NextResponse object with the headers attached
+   * @usage
+   * ```ts
+   * export const middleware = createCorsMiddleware(config);
+   * ```
    */
-  const middleware = (request: NextRequest, response?: NextResponse) => {
+  const corsMiddleware = (request: NextRequest, response?: NextResponse) => {
     const origin = request.headers.get('origin') ?? '';
     const isOriginAllowed = getIsOriginAllowed(origin, origins);
     const optionsHeaders: Header[] = [];
@@ -149,7 +139,7 @@ const createCorsMiddleware = (config: CorsConfig): NextCorsMiddleware => {
     return nextResponse;
   };
 
-  return middleware;
+  return corsMiddleware;
 };
 
 export default createCorsMiddleware;
