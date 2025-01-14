@@ -33,3 +33,13 @@ export type Header = {
   key: string;
   value: string;
 };
+
+export type PathMatcher = {
+  startWith: string;
+  additionalIncludes?: string[];
+};
+
+export type PathOptions = {
+  includes?: PathMatcher[];
+  excludes?: PathMatcher[];
+};

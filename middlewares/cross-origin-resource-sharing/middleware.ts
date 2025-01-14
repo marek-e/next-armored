@@ -4,6 +4,7 @@ import type {
   IsOriginAllowedResult,
   Method,
   Origin,
+  PathOptions,
 } from './types';
 import { DEFAULT_CORS_CONFIG } from './config';
 import {
@@ -14,9 +15,13 @@ import {
   ACCESS_CONTROL_ALLOW_HEADERS,
   ACCESS_CONTROL_ALLOW_ORIGIN,
 } from './constants';
+import { isPathIncluded } from './utils';
 import type { Header, NextCorsMiddleware } from './types';
 
-const createCorsMiddleware = (config: CorsConfig): NextCorsMiddleware => {
+const createCorsMiddleware = (
+  config: CorsConfig,
+  pathOptions: PathOptions = {},
+): NextCorsMiddleware => {
   const configWithDefaults = { ...DEFAULT_CORS_CONFIG, ...config };
   const {
     origins,
@@ -105,6 +110,22 @@ const createCorsMiddleware = (config: CorsConfig): NextCorsMiddleware => {
    * ```
    */
   const corsMiddleware = (request: NextRequest, response?: NextResponse) => {
+    const nextResponse = response ?? NextResponse.next();
+    const pathname = request.nextUrl.pathname;
+    if (
+      pathOptions.excludes !== undefined &&
+      isPathIncluded(pathname, pathOptions.excludes)
+    ) {
+      return nextResponse;
+    }
+
+    if (
+      pathOptions.includes !== undefined &&
+      !isPathIncluded(pathname, pathOptions.includes)
+    ) {
+      return nextResponse;
+    }
+
     const origin = request.headers.get('origin') ?? '';
     const isOriginAllowed = getIsOriginAllowed(origin, origins);
     const optionsHeaders: Header[] = [];
@@ -129,8 +150,6 @@ const createCorsMiddleware = (config: CorsConfig): NextCorsMiddleware => {
         },
       );
     }
-
-    const nextResponse = response ?? NextResponse.next();
 
     optionsHeaders.forEach(({ key, value }) => {
       nextResponse.headers.set(key, value);
