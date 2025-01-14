@@ -1,21 +1,16 @@
 import { NextResponse, NextRequest } from 'next/server';
-import type {
-  CorsConfig,
-  IsOriginAllowedResult,
-  Method,
-  Origin,
-  PathOptions,
-} from './types';
+import type { CorsConfig, PathOptions } from './types';
 import { DEFAULT_CORS_CONFIG } from './config';
 import {
-  ACCESS_CONTROL_MAX_AGE,
-  ACCESS_CONTROL_EXPOSE_HEADERS,
-  ACCESS_CONTROL_ALLOW_CREDENTIALS,
-  ACCESS_CONTROL_ALLOW_METHODS,
-  ACCESS_CONTROL_ALLOW_HEADERS,
-  ACCESS_CONTROL_ALLOW_ORIGIN,
-} from './constants';
-import { isPathIncluded } from './utils';
+  configureAllowCredentials,
+  configureAllowHeaders,
+  configureAllowMethods,
+  configureAllowOrigin,
+  configureExposedHeaders,
+  configureMaxAge,
+  getIsOriginAllowed,
+  isPathIncluded,
+} from './utils';
 import type { Header, NextCorsMiddleware } from './types';
 
 const createCorsMiddleware = (
@@ -33,71 +28,6 @@ const createCorsMiddleware = (
     optionsSuccessStatus,
     preflightContinue,
   } = configWithDefaults;
-
-  function configureMaxAge(maxAge: number): Header {
-    return {
-      key: ACCESS_CONTROL_MAX_AGE,
-      value: maxAge.toString(),
-    };
-  }
-
-  function configureExposedHeaders(exposedHeaders: string[]): Header {
-    return {
-      key: ACCESS_CONTROL_EXPOSE_HEADERS,
-      value: exposedHeaders.join(', '),
-    };
-  }
-
-  function configureAllowCredentials(allowCredentials: boolean): Header {
-    return {
-      key: ACCESS_CONTROL_ALLOW_CREDENTIALS,
-      value: allowCredentials ? 'true' : 'false',
-    };
-  }
-
-  function configureAllowMethods(methods: Method[]): Header {
-    return {
-      key: ACCESS_CONTROL_ALLOW_METHODS,
-      value: methods.join(', '),
-    };
-  }
-
-  function configureAllowHeaders(headers: string[]): Header {
-    return {
-      key: ACCESS_CONTROL_ALLOW_HEADERS,
-      value: headers.join(', '),
-    };
-  }
-
-  function configureAllowOrigin(origin: string): Header {
-    return {
-      key: ACCESS_CONTROL_ALLOW_ORIGIN,
-      value: origin,
-    };
-  }
-
-  function getIsOriginAllowed(
-    origin: string,
-    allowedOrigins: Origin[],
-  ): IsOriginAllowedResult {
-    if (allowedOrigins.length === 0) {
-      return { result: false };
-    }
-    // if contains '*', allow all origins
-    if (allowedOrigins.includes('*')) {
-      return { result: true, origin };
-    }
-    for (const allowedOrigin of allowedOrigins) {
-      if (typeof allowedOrigin === 'string' && allowedOrigin === origin) {
-        return { result: true, origin };
-      }
-      if (allowedOrigin instanceof RegExp && allowedOrigin.test(origin)) {
-        return { result: true, origin };
-      }
-    }
-
-    return { result: false };
-  }
 
   /**
    * @description Middleware handling CORS
