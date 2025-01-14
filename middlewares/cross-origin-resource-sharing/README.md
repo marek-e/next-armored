@@ -174,6 +174,35 @@ export const middleware = chainMiddleware([
 
 Otherwise, you can use other open source libraries like [next-middleware-chain](https://github.com/HamedBahram/next-middleware-chain) or [next-compose-middleware](https://github.com/kj455/next-compose-middleware) to chain the middlewares.
 
+### How to enable/disable CORS for specific paths
+
+You can enable CORS for specific paths by passing the `pathOptions` parameter to the `createCorsMiddleware` function.
+
+```typescript
+const corsMiddleware = createCorsMiddleware(
+  { origins: ['https://example.com', 'http://localhost:5173'] },
+  {
+    includes: [{ startsWith: '/api/v2', additionalIncludes: ['example'] }],
+  },
+);
+```
+
+This will enable CORS for all paths that start with `/api/v2` and at the same time include `example` in the pathname.
+`api/v2/product/example` will have CORS enabled, but `api/v1/product/example/test` will not.
+
+On contrary, if you want to by default enable CORS for all routes and only disable it for specific paths. You can by passing the `pathOptions` with excludes parameter to the `createCorsMiddleware` function.
+
+```typescript
+const corsMiddleware = createCorsMiddleware(
+  { origins: ['https://example.com', 'http://localhost:5173'] },
+  {
+    excludes: [{ startsWith: '/api/restricted' }],
+  },
+);
+```
+
+In this case, all the routes starting with `/api/restricted` will not enforce CORS but the SOP (Same-Origin Policy) as the default behavior suggests.
+
 ## License
 
 [MIT](LICENSE).

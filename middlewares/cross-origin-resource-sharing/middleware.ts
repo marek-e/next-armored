@@ -13,6 +13,16 @@ import {
 } from './utils';
 import type { Header, NextCorsMiddleware } from './types';
 
+/**
+ * CORS middleware builder
+ * @param config - The CORS configuration (origins, methods, headers, etc.)
+ * @param pathOptions - Path options selector (includes, excludes) to enable or disable CORS for specific paths
+ * @returns The corsMiddleware function
+ * @usage
+ * ```ts
+ * export const corsMiddleware = createCorsMiddleware(config, pathOptions);
+ * ```
+ */
 const createCorsMiddleware = (
   config: CorsConfig,
   pathOptions: PathOptions = {},
