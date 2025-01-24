@@ -109,13 +109,13 @@ const corsMiddleware = createCorsMiddleware({
   origins: ['https://example.com', 'http://localhost:5173'],
 });
 
-const middleware1 = (request: NextRequest) => {
-  console.log('middleware1');
+const otherMiddleware = (request: NextRequest) => {
+  console.log('otherMiddleware');
   return NextResponse.next();
 };
 
 export function middleware(request: NextRequest) {
-  const response = middleware1(request);
+  const response = otherMiddleware(request);
   const isApi = request.nextUrl.pathname.startsWith('/api');
   if (isApi) {
     return corsMiddleware(request, response);
@@ -133,7 +133,7 @@ Then you can give the response to the cors middleware as an argument.
 In this case, the cors middleware will attach the headers to the response instead of returning a new response.
 If all of your middlewares doesn't apply to the same matching path, you have to check if the request is an api request and then apply the cors middleware only in that case.
 
-The second option is to write an utils to chain the middlewares. Here is a snippet of how you can do it but it can be adapted to your needs.
+The second option is to write a utils to chain the middlewares. Here is a snippet of how you can do it but it can be adapted to your needs.
 
 ```typescript chainMiddlewares.ts
 export type CustomMiddleware = (
